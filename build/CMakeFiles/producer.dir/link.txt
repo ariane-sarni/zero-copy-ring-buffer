@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/producer.dir/link.d CMakeFiles/producer.dir/src/producer.cpp.o -o producer
