@@ -21,6 +21,6 @@ make
 ```
 
 ### Step 1
-Have two seperate C++ programs (producer, consumer) read/write to memory in RAM.
-Producer writes to area in ram, consumer reads address and prints it out.
-Will do with shm_open, ftruncuate, nmap.
+- [ ] Have two seperate C++ programs (producer, consumer) read/write to memory in RAM.
+- [ ] Producer writes to area in ram, consumer reads address and prints it out.
+(Will do with shm_open, ftruncuate, nmap.)
