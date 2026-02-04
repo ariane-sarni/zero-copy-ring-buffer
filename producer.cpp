@@ -9,10 +9,13 @@
 
 //Producer writes to area in ram, consumer reads address and prints it out.
 // Will do with shm_open, ftruncuate, nmap.
-//
+
 int main() {
+
+	// Sets memory in ram, and name of area of ram.
 	const char* shm_name = "/myregion";
 	const size_t shm_size = 100;
+	// File directory opens the name of RAM spot. Either creates it, or if it exists, it reads it.
 	int fd = shm_open(shm_name, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 	if (fd == -1) {
 		std::cout << "didn't work" << std::endl;
@@ -31,7 +34,7 @@ int main() {
 	if (ptr == MAP_FAILED) {
 		std::cout << "mmap failed" << std::endl;
 		close(fd);
-		shm_unlink("/myregion");
+		shm_unlink(shm_name);
 		return 0;
 	}
 
@@ -39,17 +42,22 @@ int main() {
 	strncpy(ptr, message, shm_size);
 	std::cout << "Message written to shared memory: " << ptr << std::endl;
 
-	
+
 	munmap(ptr, shm_size);
 	close(fd);
+	// basically make a loop that runs forever, then I can read from RAM while this happens.
+	// Read from ram with following command:
+	// cat /dev/shm/myregion
+	// With myregion being whaetever shm_name is
 	/*while (true) {
 		sleep(1000);
-		}*/
-	
+		} */
+	// ^ Keep above loop running forever basically to read in memory. Rerun afterwards without it if closed to end it.
+
 	if (shm_unlink(shm_name) == -1) {
 		std::cout << "unlinked" << std::endl;
 		return 0;
 	}
-	
+
 	return 0;
 }
