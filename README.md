@@ -26,6 +26,6 @@ make
 (Will do with shm_open, ftruncuate, nmap.)
 
 ### Step 2
-- [ ] Make a circular array 
-- [ ] Showcase circular array on data
+- [x] Make a circular array 
+- [x] Showcase circular array on data
 - [ ] Make it multithreaded
