@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/consumer.dir/link.d CMakeFiles/consumer.dir/src/consumer.cpp.o -o consumer

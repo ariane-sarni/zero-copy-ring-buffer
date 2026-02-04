@@ -24,3 +24,8 @@ make
 - [x] Have two seperate C++ programs (producer, consumer) read/write to memory in RAM.
 - [x] Producer writes to area in ram, consumer reads address and prints it out.
 (Will do with shm_open, ftruncuate, nmap.)
+
+### Step 2
+- [ ] Make a circular array 
+- [ ] Showcase circular array on data
+- [ ] Make it multithreaded
