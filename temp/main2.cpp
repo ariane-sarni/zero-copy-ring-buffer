@@ -34,7 +34,7 @@ struct CircularBuffer {
 		// Set current indx point to new value, then move forward depending on modulo.
 		buffer[back] = val;
 		back = (back + 1) % capacity;
-		
+		size++;
 		// Signal to threads that might be waiting for it to not be full that they can move on.
 		not_empty.notify_one();
 	}
@@ -48,6 +48,7 @@ struct CircularBuffer {
 		// Otherwise, we wait.
 		// This is a lamba expression
 		not_empty.wait(lock, [this](){ return size > 0;});
+		// Need to practice lambdas.
 		// Value to return
 		int val = buffer[front];
 		// Move front, thus allowing 
@@ -63,6 +64,11 @@ struct CircularBuffer {
 
 int main(){
 	
-	
+	CircularBuffer buff(10);
+	// Strucutre is:
+	// Pointer to Structure function you're going too, pointer to structure object, and then all arguments.
+	std::thread t1(&CircularBuffer::add, &buff, 5);
+	t1.join();
+	std::cout << buff.read() << std::endl;
 	return 0;
 }

@@ -48,6 +48,7 @@ int main() {
   strncpy(ptr, message, shm_size);
   std::cout << "Message written to shared memory: " << ptr << std::endl;
 
+  
   munmap(ptr, shm_size);
   close(fd);
   // basically make a loop that runs forever, then I can read from RAM while
