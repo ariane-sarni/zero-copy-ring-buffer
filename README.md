@@ -28,4 +28,4 @@ make
 ### Step 2
 - [x] Make a circular array 
 - [x] Showcase circular array on data
-- [ ] Make it multithreaded
+- [x] Make it multithreaded

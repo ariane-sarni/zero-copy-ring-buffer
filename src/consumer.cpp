@@ -1,17 +1,7 @@
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <mutex>
-#include <thread>
-#include <shared_mutex>
-#include <cerrno>
-#include <cstring>
-#include <iostream>
-#include <string>
+#include "queue.h"
 
 int main() {
-  const char* shm_name = "/myregion";
+  const char *shm_name = "/myregion";
   const size_t shm_size = 100;
   int fd = shm_open(shm_name, O_RDWR, S_IRUSR);
   if (fd == -1) {
@@ -27,8 +17,8 @@ int main() {
     return 0;
   }
 
-  char* ptr =
-      static_cast<char*>(mmap(NULL, shm_size, PROT_READ, MAP_SHARED, fd, 0));
+  char *ptr =
+      static_cast<char *>(mmap(NULL, shm_size, PROT_READ, MAP_SHARED, fd, 0));
 
   if (ptr == MAP_FAILED) {
     std::cout << "Mmap failed" << std::endl;

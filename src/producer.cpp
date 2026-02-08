@@ -1,21 +1,11 @@
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <mutex>
-#include <thread>
-#include <shared_mutex>
-#include <cerrno>
-#include <cstring>
-#include <iostream>
-#include <string>
+#include "queue.h"
 
 // Producer writes to area in ram, consumer reads address and prints it out.
 //  Will do with shm_open, ftruncuate, nmap.
 
 int main() {
   // Sets memory in ram, and name of area of ram.
-  const char* shm_name = "/myregion";
+  const char *shm_name = "/myregion";
   const size_t shm_size = 100;
   // File directory opens the name of RAM spot. Either creates it, or if it
   // exists, it reads it.
@@ -34,7 +24,7 @@ int main() {
   }
 
   // Cast a character pointer to mmap.
-  char* ptr = static_cast<char*>(
+  char *ptr = static_cast<char *>(
       mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
 
   if (ptr == MAP_FAILED) {
@@ -44,11 +34,12 @@ int main() {
     return 0;
   }
 
-  const char* message = "Hello shared memory!";
+  CircularBuffer test(5);
+  
+  const char *message = "doggies";
   strncpy(ptr, message, shm_size);
   std::cout << "Message written to shared memory: " << ptr << std::endl;
 
-  
   munmap(ptr, shm_size);
   close(fd);
   // basically make a loop that runs forever, then I can read from RAM while
