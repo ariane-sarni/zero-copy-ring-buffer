@@ -13,7 +13,21 @@
 // First, research atomics.
 // 
 
+// Input/Output
+#include <iostream>   // For std::cout, std::cerr
+
+// POSIX Shared Memory & File Handling
+#include <fcntl.h>    // For O_CREAT, O_RDWR (File control options)
+#include <sys/mman.h> // For mmap, shm_open, munmap, PROT_*, MAP_*
+#include <sys/stat.h> // For mode constants (S_IRUSR, S_IWUSR)
+#include <unistd.h>   // For ftruncate, close
+
+// Threading & Timing (For the loops)
+#include <thread>     // For std::this_thread::sleep_for
+#include <chrono>     // For std::chrono::milliseconds
+#include <cstdint>    // For uint32_t (Standard fixed-width integers)
 #include <atomic>
+#include <cstring>
 
 class CircularBuffer{
 	// Use atomics, use set buffer capacity.
