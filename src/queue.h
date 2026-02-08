@@ -9,5 +9,23 @@
 // 
 // Mutexes are program specific. Cannot share through seperate programs. 
 // 
-// So need to use atomics instead of mutexes, and use a set buffer array size. Probably 1024. 
+// So need to use atomics instead of mutexes, and use a set buffer array capacity. Probably 1024. 
 // First, research atomics.
+// 
+
+#include <atomic>
+
+class CircularBuffer{
+	// Use atomics, use set buffer capacity.
+	// We now no longer need a capacity. It is a set capacity.
+	// We also *technically* dont need a 'size' index.
+	// front - back = size. 
+	private:
+		
+		int buffer[1024];
+		std::atomic <int> front{0};
+		std::atomic <int> back{0};
+	public:
+		bool pop(int &val); // The value that is popped is written to val.
+		bool push(int val); // Val is written into buffer.
+};
