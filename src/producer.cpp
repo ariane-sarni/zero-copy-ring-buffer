@@ -6,19 +6,18 @@
 // 1. Set RAM location
 // In this instance, our shm_name, under /myregion
 // 2. Set a shared memory size.
-// In this instance, should be the size of our class, since we already know the total size.
+// In this instance, should be the size of our class, since we already know the
+// total size.
 // 3. Connect via shm_open, grab fd.
 // 4. Truncate file directory to shm size.
 // 5. Use mmap to cast a CircularArray object to the physical address.
 // 6. Write to object.
 
-
 int main() {
   // Sets memory in ram, and name of area of ram.
   const char *shm_name = "/myregion";
   const size_t shm_size = sizeof(CircularBuffer);
-  //const size_t shm_size = 100;
-
+  // const size_t shm_size = 100;
 
   // File directory opens the name of RAM spot. Either creates it, or if it
   // exists, it reads it.
@@ -37,9 +36,10 @@ int main() {
   }
 
   // Cast a character pointer to mmap.
-  CircularBuffer *ptr = static_cast<CircularBuffer*>(mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
-  //char *ptr = static_cast<char *>(
-     // mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+  CircularBuffer *ptr = static_cast<CircularBuffer *>(
+      mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+  // char *ptr = static_cast<char *>(
+  //  mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
 
   if (ptr == MAP_FAILED) {
     std::cout << "mmap failed" << std::endl;
@@ -48,10 +48,20 @@ int main() {
     return 0;
   }
 
-  new (ptr) CircularBuffer();
+  // Allocate memory. Basically telling it to initialize, because making it a
+  // static pointer earlier is not like constructing it. ALternativley, can call
+  // initialization function
+  // new (ptr) CircularBuffer();
 
+  // Example with init
+  // Easier for me to understand, so doing this instead.
+  ptr->init();
 
-  std::cout << "Message written to shared memory: " << ptr << std::endl;
+  for (int i = 0; i < 10; i++) {
+    ptr->push(i);
+    std::cout << "Pushing: " << i << std::endl;
+    sleep(5);
+  }
 
   munmap(ptr, shm_size);
   close(fd);

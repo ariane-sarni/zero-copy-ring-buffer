@@ -6,16 +6,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # --- Executable 1: Producer ---
-add_executable(producer src/producer.cpp)
+add_executable(producer src/producer.cpp src/queue.cpp)
 
 # --- Executable 2: Consumer ---
-add_executable(consumer src/consumer.cpp)
+add_executable(consumer src/consumer.cpp src/queue.cpp)
 
 # Optional: If you use pthreads (common in ring buffers), add this:
 # find_package(Threads REQUIRED)
 # target_link_libraries(producer PRIVATE Threads::Threads)
 # target_link_libraries(consumer PRIVATE Threads::Threads)
-# 
+#
 # # --- Formatting Target ---
 
 # 1. Find the clang-format executable
@@ -23,8 +23,8 @@ find_program(CLANG_FORMAT "clang-format")
 
 if(CLANG_FORMAT)
     # 2. Get all source files in the src directory
-    file(GLOB_RECURSE ALL_SOURCE_FILES 
-        "src/*.cpp" 
+    file(GLOB_RECURSE ALL_SOURCE_FILES
+        "src/*.cpp"
         "src/*.h"
     )
 
