@@ -39,8 +39,8 @@ class CircularBuffer {
   // front - back = size.
 private:
   int buffer[1024];
-  std::atomic<int> front{0};
-  std::atomic<int> back{0};
+  alignas(64) std::atomic<int> front{0};
+  alignas(64) std::atomic<int> back{0};
 
 public:
   void init();
