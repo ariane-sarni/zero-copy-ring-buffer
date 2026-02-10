@@ -13,6 +13,14 @@
 // 5. Use mmap to cast a CircularArray object to the physical address.
 // 6. Write to object.
 
+// Gonna make it so user manually enters data, just so I can mess with how its done.
+// Step 1 - they enter memory name. 
+// 
+
+const char* setSharedName(std::string name) {
+	
+}
+
 int main() {
   // Sets memory in ram, and name of area of ram.
   const char *shm_name = "/myregion";
